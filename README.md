@@ -10,7 +10,7 @@ The challenges required a strong foundation in complex data structures, NP-hard 
 
 ---
 
-## 🛠️ Tech Stack & Tools
+##  Tech Stack & Tools
 * **Core Language:** C++17
 * **Standard Library:** Heavily utilized `<bits/stdc++.h>`, specifically `std::vector`, `std::map`, `std::set`, `std::tuple`, and `std::string` for memory-efficient state management.
 * **Architecture:** Custom Abstract Syntax Tree (AST) parsing, Event-Driven Simulation, and State-Space Search (Bitmasking).
@@ -18,7 +18,7 @@ The challenges required a strong foundation in complex data structures, NP-hard 
 
 ---
 
-## 🚀 Project Deep Dives
+##  Project Deep Dives
 
 ### 1. JSON → TypeScript Type Generator
 **Directory:** `/json-to-typescript`
@@ -54,7 +54,7 @@ A deterministic optimization engine for planning multi-day group itineraries und
 
 ---
 
-## 🧠 Design Philosophy
+##  Design Philosophy
 
 Coming from a background in Mechanical Engineering, my approach to software architecture focuses on robust, fail-safe LLD structures. I write code that is logically transparent, highly optimized, and maintainable.
 * **Zero Abstraction Bloat:** Preferring explicit, readable loop structures and intuitive variable naming over overly abstracted "magic."
@@ -63,7 +63,7 @@ Coming from a background in Mechanical Engineering, my approach to software arch
 
 ---
 
-## ⚙️ Build & Execute
+##  Build & Execute
 
 All solutions are self-contained in standard C++ source files.
 
