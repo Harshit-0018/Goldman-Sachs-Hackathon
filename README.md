@@ -1,40 +1,72 @@
-# GSIH Hackathon Solutions 
+# GSIH Hackathon 2026 - Algorithmic & Systems Design Solutions
 
-This repository contains my C++ solutions for the GSIH Hackathon. The entire suite of solutions was developed over an intensive **12-hour sprint**, focusing heavily on algorithmic efficiency, custom parsing, and Low-Level Design (LLD) principles.
+![Language](https://img.shields.io/badge/Language-C++17-blue.svg)
+![Build](https://img.shields.io/badge/Build-Passing-brightgreen.svg)
+![Status](https://img.shields.io/badge/Status-Completed-success)
 
-**Author:** Harshit Singh  
-**Institution:** National Institute of Technology Calicut (NITC)  
-**Language:** C++17
+This repository contains my comprehensive C++ solutions for the GSIH Hackathon. The entire suite of solutions was conceptualized, designed, and developed over an intensive **12-hour sprint**. 
 
-## 🚀 Overview
+The challenges required a strong foundation in complex data structures, NP-hard state simulations, and custom parsing. Rather than relying on heavy external libraries, these solutions implement core logic entirely from scratch, showcasing a deep integration of **Low-Level Design (LLD)** principles and competitive programming efficiency.
 
-The hackathon featured three complex algorithmic and systems-design challenges. Rather than relying on external libraries, these solutions implement core logic—like JSON AST parsing and NP-hard state simulations—entirely from scratch using standard C++.
+---
+
+## 🛠️ Tech Stack & Tools
+* **Core Language:** C++17
+* **Standard Library:** Heavily utilized `<bits/stdc++.h>`, specifically `std::vector`, `std::map`, `std::set`, `std::tuple`, and `std::string` for memory-efficient state management.
+* **Architecture:** Custom Abstract Syntax Tree (AST) parsing, Event-Driven Simulation, and State-Space Search (Bitmasking).
+* **Build System:** GCC (GNU Compiler Collection).
+
+---
+
+## 🚀 Project Deep Dives
 
 ### 1. JSON → TypeScript Type Generator
 **Directory:** `/json-to-typescript`
 
-A deterministic type generator that parses compact JSON arrays and outputs highly formatted, collision-free TypeScript interfaces. 
-* **Key Features:** Custom built-in JSON parser (no external dependencies), depth-first ASCII-ordered type merging, and dynamic abstract syntax tree (AST) traversal.
-* **Challenges Solved:** Handling mixed arrays, nested object type collisions, and strict deterministic lexicographical formatting.
+A deterministic type generator that ingests compact JSON arrays and outputs highly formatted, collision-free TypeScript interface declarations.
+
+**Technical Implementation:**
+* **Custom JSON AST Parser:** Built a minimal, zero-dependency JSON parser from scratch. It uses a recursive descent approach to tokenize and parse strings, numbers, booleans, nested objects, and arrays into a custom `JsonVal` struct.
+* **Deterministic Lexicographical Merging:** Implemented a depth-first, ASCII-ordered traversal algorithm to merge properties across thousands of JSON objects.
+* **Collision-Free Naming Engine:** Designed a dynamic naming system that capitalizes parent keys and automatically appends numeric suffixes (e.g., `Address`, `Address2`) when structural collisions occur in the AST, tracking global state via `std::set`.
+* **Union Type Resolution:** Engineered logic to detect mixed arrays (e.g., objects mixed with primitives) and compute ASCII-sorted union strings like `(boolean | null | number | string)[]`.
 
 ### 2. Multi-Agent Drone Routing in a Temporal Urban Grid
 **Directory:** `/drone-delivery`
 
-A temporal-spatial routing engine for a fleet of autonomous delivery drones navigating a 2D city grid. 
-* **Key Features:** Simulates energy constraints, payload capacities, and dynamic No-Fly Zones (NFZs) that activate/deactivate at specific time windows.
-* **Challenges Solved:** Avoiding active NFZ intersections using continuous space-time checks, optimizing multi-package delivery paths to maximize raw scores, and managing charging station queues.
+A spatial-temporal routing engine for managing a fleet of autonomous delivery drones navigating a 2D city grid while balancing battery life and strict package deadlines.
+
+**Technical Implementation:**
+* **Temporal-Spatial Collision Detection:** Implemented continuous line-segment checks to prevent drones from intersecting dynamic No-Fly Zones (NFZs) during their active time windows (`T_start` to `T_end`).
+* **Energy & Payload State Management:** Built a highly tracked state machine for each drone, calculating Euclidean distances and applying the `distance * (1 + current_payload_weight)` energy degradation formula leg-by-leg.
+* **Charging Queue Optimization:** Integrated logic to route drones to the nearest viable charging stations when battery capacity falls below the required threshold for a return trip, accounting for limited station slots.
+* **Score Maximization Strategy:** Structured the routing to prioritize dropping heavier payloads first to minimize compounding energy costs, maximizing the custom evaluation metric.
 
 ### 3. Group Trip Planner
 **Directory:** `/group-trip-planner`
 
-A deterministic optimization engine for planning multi-day group itineraries under strict budget, energy, and time constraints.
-* **Key Features:** Bitmasking and lexicographical sorting to evaluate the NP-hard subset selection of daily activities.
-* **Challenges Solved:** Real-time replanning based on dynamic chronological events (e.g., weather blocks, sudden fatigue, budget cuts, or users dropping out) while maintaining fair constraints bottlenecked by the most restricted group member.
+A deterministic optimization engine for planning multi-day group itineraries under strict, dynamic constraints (budget, stamina, and time).
 
-## 🛠️ Build & Run Instructions
+**Technical Implementation:**
+* **Bitmasking for NP-Hard Subset Evaluation:** Evaluated all valid combinations of daily activities using bitmask generation (`1 << n`). Filtered out combinations that exceeded the limits of the most restricted group member (lowest budget, lowest energy).
+* **Lexicographical Tie-Breaking:** Designed a custom `std::tuple` sorting mechanism to guarantee deterministic output. It prioritizes maximum group satisfaction, then lowest cost, and finally the lexicographical order of activity IDs.
+* **Event-Driven Replanning Architecture:** Built a robust replay system to handle chronological real-world interruptions (`WEATHER`, `DROP`, `FATIGUE`, `BUDGET`). Whenever an event triggers, the system accurately recalculates the remaining itinerary by persisting the state of used activities and active users.
 
-All solutions are contained in single C++ files for easy compilation. A standard C++17 compiler (like GCC) is required.
+---
 
-**Compile:**
+## 🧠 Design Philosophy
+
+Coming from a background in Mechanical Engineering, my approach to software architecture focuses on robust, fail-safe LLD structures. I write code that is logically transparent, highly optimized, and maintainable.
+* **Zero Abstraction Bloat:** Preferring explicit, readable loop structures and intuitive variable naming over overly abstracted "magic."
+* **Memory Efficiency:** Extensive use of object references (`&`) and pointers to avoid deep copies during recursive state merging and simulation rollbacks.
+* **Edge-Case Resilience:** The solutions are built to handle boundary conditions strictly specified by the problem statements (e.g., empty JSON arrays, null fields, overlapping NFZs, and immediate budget cuts).
+
+---
+
+## ⚙️ Build & Execute
+
+All solutions are self-contained in standard C++ source files.
+
+**Compilation:**
 ```bash
-g++ -O3 -std=c++17 solution_file.cpp -o solution
+g++ -O3 -std=c++17 <solution_file.cpp> -o target_executable
